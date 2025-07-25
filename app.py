@@ -51,10 +51,18 @@ st.plotly_chart(fig2)
 
 # Graphique 3 : Nombre de transactions par catégorie
 st.subheader("Nombre de transactions par catégorie")
-fig3 = px.bar(df_filtered['ProductCategory'].value_counts().reset_index(), 
-              x='index', y='ProductCategory',
-              labels={"index": "Catégorie", "ProductCategory": "Nombre"},
-              title="Répartition des transactions")
+# On compte les catégories et on renomme les colonnes
+df_cat = df_filtered['ProductCategory'].value_counts().reset_index()
+df_cat.columns = ['Catégorie', 'Nombre']
+
+# On crée le graphique
+fig3 = px.bar(
+    df_cat,
+    x='Catégorie',
+    y='Nombre',
+    labels={"Catégorie": "Catégorie", "Nombre": "Nombre de transactions"},
+    title="Répartition des transactions par catégorie"
+)
 st.plotly_chart(fig3)
 
 # Graphique 4 : Boxplot des montants par stratégie de prix
